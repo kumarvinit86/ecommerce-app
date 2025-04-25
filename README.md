@@ -1,6 +1,7 @@
 # ecommerce-app
 
 ### Folder Structure
+```plaintext
 /ecommerce-platform
 │
 ├── /services
@@ -26,3 +27,4 @@
 ├── docker-compose.yml
 ├── k8s-deployments/
 └── .github/workflows/ or /azure-pipelines/
+```
