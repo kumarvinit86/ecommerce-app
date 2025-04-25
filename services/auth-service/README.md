@@ -1,5 +1,6 @@
 
 
+```plaintext
 auth-service/
 │
 ├── AuthService.API                 --> API layer (Controllers)
@@ -9,3 +10,4 @@ auth-service/
 ├── AuthService.Tests              --> xUnit test project
 ├── AuthService.Contracts          --> Shared DTOs (for other services)
 └── dockerfile
+```
