@@ -1,5 +1,4 @@
 
-
 ```plaintext
 auth-service/
 │
