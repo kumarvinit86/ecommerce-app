@@ -17,13 +17,14 @@ public class OrganizationController : ControllerBase
         this.organizationQueryService = organizationQueryService;
     }
 
-    [HttpPost]
+    [HttpPost(Name = "create-organization")]
     public async Task<IActionResult> CreateOrganization(CreateOrganizationDto dto)
     {
         var organizationId = await organizationCommandService.CreateOrganizationAsync(dto.OrganizationName, dto.OwnerId);
         return CreatedAtAction(nameof(GetOrganization), new { id = organizationId }, null);
     }
 
+    [HttpPost(Name = "update-organization")]
     public async Task<IActionResult> UpdateOrganization(Guid id, UpdateOrganizationDto dto)
     {
         await organizationCommandService.UpdateOrganizationAsync(id, dto.NewName);

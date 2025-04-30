@@ -1,7 +1,7 @@
 ﻿using AuthService.API.DTOs;
 using AuthService.API.Models;
-using AuthService.Contracts.Inbound.Command;
 using AuthService.Contracts.Inbound.Query;
+using CommunityToolkit.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -9,14 +9,18 @@ using Microsoft.AspNetCore.Mvc;
 public class AuthController : ControllerBase
 {
     private readonly IAuthQueryService authQueryService;
+    private readonly ILogger<AuthController> logger;
 
-    public AuthController(IAuthCommandService authCommandService, IAuthQueryService authQueryService)
+    public AuthController(IAuthQueryService authQueryService, ILogger<AuthController> logger)
     {
+        Guard.IsNotNull(authQueryService, nameof(authQueryService));
+        Guard.IsNotNull(logger, nameof(logger));
         this.authQueryService = authQueryService;
+        this.logger = logger;
     }
 
     // Authenticate user and generate token
-    [HttpPost("authenticate")]
+    [HttpPost(Name = "authenticate")]
     [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
@@ -33,16 +37,19 @@ public class AuthController : ControllerBase
         }
         catch (UnauthorizedAccessException ex)
         {
+            logger.LogError(ex, "Unauthorized access attempt. Email: {Email}", dto.Email);
             return Unauthorized(new { Message = ex.Message });
         }
         catch (Exception ex)
         {
+            logger.LogError(ex, "Unauthorized access attempt. Email: {Email}", dto.Email);
             return BadRequest(new { Message = "Server Error." });
         }
     }
 
     // Validate token
-    [HttpPost("validate-token")]
+    [HttpPost(Name = "validate-token")]
+    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> ValidateToken(ValidateTokenDto dto)
     {
         var isValid = await authQueryService.ValidateToken(dto.Token);

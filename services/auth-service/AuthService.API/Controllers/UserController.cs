@@ -19,7 +19,7 @@ public class UserController : ControllerBase
         this.userQueryService = userQueryService;
     }
 
-    [HttpPost]
+    [HttpPost(Name ="create")]
     public async Task<IActionResult> CreateUser(CreateUserDto dto)
     {
         var userId = await userCommandService.CreateUserAsync(dto.FullName, dto.Email, dto.Password);

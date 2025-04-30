@@ -13,14 +13,14 @@ public class RoleController : ControllerBase
         this.roleCommandService = roleCommandService;
     }
 
-    [HttpPost("assign")]
+    [HttpPost(Name ="assign")]
     public async Task<IActionResult> AssignRole(AssignRoleDto dto)
     {
         await roleCommandService.AssignRoleAsync(dto.UserId, dto.RoleId);
         return NoContent();
     }
 
-    [HttpPost("remove")]
+    [HttpPost(Name = "remove")]
     public async Task<IActionResult> RemoveRole(RemoveRoleDto dto)
     {
         await roleCommandService.RemoveRoleAsync(dto.UserId, dto.RoleId);

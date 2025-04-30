@@ -1,25 +1,27 @@
 using AuthService.Infrastructure.Seeders;
 using AuthService.Infrastructure.SqlDataBase;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models; // Add this using directive
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthService API", Version = "v1" });
 });
 
+// Add DbContext
 builder.Services.AddDbContext<AuthDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-var app = builder.Build();
+// Add controllers
+builder.Services.AddControllers();
 
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -30,34 +32,27 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+// Configure path base before app.Run()
+app.UsePathBase("/swagger");
+
 app.UseHttpsRedirection();
+app.UseAuthorization();
 
-var summaries = new[]
+// Map controllers
+app.MapControllers();
+
+try
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
+    // Seed Database
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    await DatabaseSeeder.SeedAsync(services);
+}
+catch (Exception ex)
 {
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
-
-// Seed Database
-await DatabaseSeeder.SeedAsync(app.Services);
+    // Log the exception (you can replace this with a proper logging mechanism)
+    Console.WriteLine($"An error occurred while seeding the database: {ex.Message}");
+    throw;
+}
 
 app.Run();
-
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
