@@ -1,0 +1,9 @@
+﻿namespace AuthService.API.Models
+{
+    public class AuthResponse
+    {
+        public string EmailId { get; set; }
+        public string AccessToken { get; set; }
+        public string RefreshToken { get; set; }
+    }
+}
