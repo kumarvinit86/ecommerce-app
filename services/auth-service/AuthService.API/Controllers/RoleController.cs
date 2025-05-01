@@ -3,7 +3,7 @@ using AuthService.Contracts.Inbound.Command;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/roles")]
+[Route("api/roles/[action]")]
 public class RoleController : ControllerBase
 {
     private readonly IRoleCommandService roleCommandService;
@@ -13,7 +13,7 @@ public class RoleController : ControllerBase
         this.roleCommandService = roleCommandService;
     }
 
-    [HttpPost(Name ="assign")]
+    [HttpPost(Name = "assign")]
     public async Task<IActionResult> AssignRole(AssignRoleDto dto)
     {
         await roleCommandService.AssignRoleAsync(dto.UserId, dto.RoleId);

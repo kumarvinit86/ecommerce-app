@@ -2,6 +2,7 @@ using AuthService.Infrastructure.Seeders;
 using AuthService.Infrastructure.SqlDataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthService API", Version = "v1" });
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
 });
 
 // Add DbContext
@@ -54,5 +58,4 @@ catch (Exception ex)
     Console.WriteLine($"An error occurred while seeding the database: {ex.Message}");
     throw;
 }
-
 app.Run();

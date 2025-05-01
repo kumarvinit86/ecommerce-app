@@ -5,7 +5,7 @@ using AuthService.Contracts.Inbound.Command;
 using AuthService.Contracts.Inbound.Query;
 
 [ApiController]
-[Route("api/organizations")]
+[Route("api/organizations/[action]")]
 public class OrganizationController : ControllerBase
 {
     private readonly IOrganizationCommandService organizationCommandService;

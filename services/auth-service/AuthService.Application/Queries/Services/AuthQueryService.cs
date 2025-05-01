@@ -39,13 +39,11 @@ namespace AuthService.Application.Queries.Services
             {
                 throw new UnauthorizedAccessException("Invalid emailid");
             }
-            var isValidUser = user.PasswordHash == password;
-            if (!isValidUser)
-            {
-                throw new UnauthorizedAccessException("Invalid password");
-            }
+
+
             // Get Roles of user  
             List<string> roles = await roleQueryService.GetUserRolesAsync(user.Id);
+            
             // Generate token  
             var accessToken = tokenWriteService.GenerateAccessToken(user.Id, roles);
             var refreshToken = tokenWriteService.GenerateRefreshToken();

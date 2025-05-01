@@ -5,7 +5,7 @@ using CommunityToolkit.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/users")]
+[Route("api/users/[action]")]
 public class UserController : ControllerBase
 {
     private readonly IUserCommandService userCommandService;
