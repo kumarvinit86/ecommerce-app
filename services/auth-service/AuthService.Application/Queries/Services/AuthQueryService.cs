@@ -14,7 +14,7 @@ namespace AuthService.Application.Queries.Services
         private readonly ITokenWriteService tokenWriteService;
         private readonly IUserReadRepository userReadRepository;
         private readonly IRoleQueryService roleQueryService;
-        public AuthQueryService(ITokenReadService tokenReadService, 
+        public AuthQueryService(ITokenReadService tokenReadService,
             IUserReadRepository userReadRepository,
             IRoleQueryService roleQueryService,
             ITokenWriteService tokenWriteService)
@@ -41,7 +41,7 @@ namespace AuthService.Application.Queries.Services
                 throw new UnauthorizedAccessException("Invalid emailid");
             }
 
-            var isValidUser = user.PasswordHash == Crypto.HashPassword(password);
+            var isValidUser = Crypto.VerifyPassword(password, user.PasswordHash);
             if (!isValidUser)
             {
                 throw new UnauthorizedAccessException("Invalid password");
@@ -49,7 +49,7 @@ namespace AuthService.Application.Queries.Services
 
             // Get Roles of user  
             List<string> roles = await roleQueryService.GetUserRolesAsync(user.Id);
-            
+
             // Generate token  
             var accessToken = tokenWriteService.GenerateAccessToken(user.Id, roles);
             var refreshToken = tokenWriteService.GenerateRefreshToken();
@@ -71,7 +71,7 @@ namespace AuthService.Application.Queries.Services
             //        u.RefreshTokens.Any(rt => rt.Token == refreshToken && rt.ExpiryDate > DateTime.UtcNow)));
 
             //Will be replaced with the above code after adding Tables for user and token 
-            var user =new User();
+            var user = new User();
 
             if (user is null)
             {

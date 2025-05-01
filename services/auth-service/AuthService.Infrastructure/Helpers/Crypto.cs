@@ -47,5 +47,17 @@ public class Crypto
 
         return hashed == parts[1];
     }
+    public static string UnHashPassword(string storedHash)
+    {
+        // Split the stored hash into salt and hashed password
+        var parts = storedHash.Split('.');
+        if (parts.Length != 2) throw new ArgumentException("Invalid stored hash format.");
+
+        // Extract the salt
+        byte[] salt = Convert.FromBase64String(parts[0]);
+
+        // Return the salt as a string (passwords hashed with PBKDF2 cannot be decrypted)
+        return Convert.ToBase64String(salt);
+    }
 
 }
