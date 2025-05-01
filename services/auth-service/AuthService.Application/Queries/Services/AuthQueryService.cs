@@ -2,6 +2,7 @@
 using AuthService.Contracts.Outbound.Command;
 using AuthService.Contracts.Outbound.Query;
 using AuthService.Domain.Entities;
+using AuthService.Infrastructure.Helpers;
 using CommunityToolkit.Diagnostics;
 using MediatR;
 
@@ -40,6 +41,11 @@ namespace AuthService.Application.Queries.Services
                 throw new UnauthorizedAccessException("Invalid emailid");
             }
 
+            var isValidUser = user.PasswordHash == Crypto.HashPassword(password);
+            if (!isValidUser)
+            {
+                throw new UnauthorizedAccessException("Invalid password");
+            }
 
             // Get Roles of user  
             List<string> roles = await roleQueryService.GetUserRolesAsync(user.Id);

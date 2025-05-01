@@ -1,7 +1,10 @@
+using AuthService.API;
+using AuthService.API.SwaggerConfiguration.ModelSamples;
 using AuthService.Infrastructure.Seeders;
 using AuthService.Infrastructure.SqlDataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,16 +14,22 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthService API", Version = "v1" });
+    c.EnableAnnotations();
+    c.ExampleFilters();
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });
-
+builder.Services.AddSwaggerExamplesFromAssemblyOf<AuthenticateUserDtoExample>();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 // Add DbContext
 builder.Services.AddDbContext<AuthDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructure(); 
+builder.Services.AddApiServices();
 
 // Add controllers
 builder.Services.AddControllers();
