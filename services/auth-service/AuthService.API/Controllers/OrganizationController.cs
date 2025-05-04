@@ -1,8 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using AuthService.Application.Commands.Services;
 using AuthService.API.DTOs;
 using AuthService.Contracts.Inbound.Command;
 using AuthService.Contracts.Inbound.Query;
+using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/organizations/[action]")]
