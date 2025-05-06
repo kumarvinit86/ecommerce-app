@@ -105,6 +105,6 @@ More updates will follow as time permits. Stay tuned!
 
 ## 🙋‍♂️ About Me
 
-I’m a **Lead Software Engineer** and **Application Architect** with 15+ years of experience in the Microsoft stack. I'm currently exploring AI, Cloud, and distributed architectures with a goal of becoming an AI Architect. Connect with me on [LinkedIn](https://www.linkedin.com/) to follow the project’s progress and updates.
+I’m a **Lead Software Engineer** and **Application Architect** with 15+ years of experience in the Microsoft stack. I'm currently exploring AI, Cloud, and distributed architectures with a goal of becoming an AI Architect. Connect with me on [LinkedIn](https://www.linkedin.com/in/vinit-kumar-19284717/) to follow the project’s progress and updates.
 I am looking for contributers to work with me on this project.
 
