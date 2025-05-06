@@ -20,6 +20,13 @@ public class TokenWriteService : ITokenWriteService
     {
         var secret = configuration.GetValue<string>("SecretPrivateKey");
         Guard.IsNotNullOrEmpty(secret, nameof(secret));
+
+        // Ensure the secret key is at least 32 characters long
+        if (Encoding.UTF8.GetByteCount(secret) < 32)
+        {
+            throw new SecurityTokenException("The secret key must be at least 32 characters long.");
+        }
+
         var issuer = configuration.GetValue<string>("Issuer");
         Guard.IsNotNullOrEmpty(issuer, nameof(issuer));
         var audience = configuration.GetValue<string>("Audience");

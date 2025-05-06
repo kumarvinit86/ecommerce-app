@@ -23,8 +23,8 @@ namespace AuthService.Application.Queries.Services
 
         public async Task<List<string>> GetUserRolesAsync(Guid userId)
         {
-            var role = await roleReadRepository.GetByIdAsync(userId);
-            return role != null ? new List<string> { role.Name } : new List<string>();
+            var role = (await roleReadRepository.GetByIdAsync(userId)).Select(r => r.Name).ToList();
+            return role;
         }
     }
 }

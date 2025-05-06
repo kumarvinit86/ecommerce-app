@@ -21,10 +21,19 @@ namespace AuthService.Infrastructure.Repositories.Query
             return await dbContext.Roles.AsNoTracking().ToListAsync();
         }
 
-        public async Task<Role> GetByIdAsync(Guid userId)
+        public async Task<List<Role>> GetByIdAsync(Guid userId)
         {
-            var role = await dbContext.Roles.FindAsync(userId);
-            Guard.IsNotNull(role, nameof(role)); // Ensure role is not null
+            var role = await (from u in dbContext.Users 
+                        join ur in dbContext.UserRoles on u.Id equals ur.UserId
+                        join r in dbContext.Roles on ur.RoleId equals r.Id
+                        where u.Id == userId
+                        select r
+                        ).AsNoTracking().ToListAsync();
+            if(role is null)
+            {
+                return new List<Role>();
+            }
+
             return role;
         }
 
