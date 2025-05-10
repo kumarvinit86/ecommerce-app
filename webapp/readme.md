@@ -2,7 +2,7 @@
 
 This is the **shell application** (host app) for our modular **E-Commerce Platform** built using **Micro Frontend Architecture** with **Webpack 5 Module Federation**. The goal is to create a scalable, maintainable, and independently deployable e-commerce system.
 
----
+--- 
 
 ## 🚀 Project Vision
 
