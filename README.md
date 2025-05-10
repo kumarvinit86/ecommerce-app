@@ -39,7 +39,7 @@ This project is a modular, microservices-based **E-Commerce Platform** designed 
 
 ### Frontend
 - **ReactJS**
-- **Micro Frontend Architecture** (for more details [click here](./webapp/README.md))
+- **Micro Frontend Architecture** (for more details [click here](./webapp/readme.md))
 - **MUI** for styling
 
 
