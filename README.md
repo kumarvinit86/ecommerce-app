@@ -39,9 +39,9 @@ This project is a modular, microservices-based **E-Commerce Platform** designed 
 
 ### Frontend
 - **ReactJS**
-- **Zustand** for state management
-- **Micro Frontend Architecture**
-- **TailwindCSS** for styling
+- **Micro Frontend Architecture** (for more details [click here](./webapp/README.md))
+- **MUI** for styling
+
 
 ### AI & Machine Learning
 - Will add AI driven features as well (Features are not decided yet, Ex: Voice driven search) 
