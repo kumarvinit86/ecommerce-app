@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Container,
@@ -6,11 +6,13 @@ import {
   Typography,
   Divider,
   Stack,
+  Button,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
 import TwitterIcon from "@mui/icons-material/Twitter";
+
 // Define styles using Material-UI's makeStyles
 const useStyles = makeStyles({
   container: {
@@ -60,29 +62,48 @@ const useStyles = makeStyles({
     fontSize: "0.9rem",
     color: "#666",
   },
-  socialText: {
-    fontSize: "1rem",
-    fontWeight: "bold",
+  socialIcon: {
+    fontSize: "2rem",
     cursor: "pointer",
-    transition: "color 0.3s ease",
+    transition: "color 0.3s ease, transform 0.3s ease",
     "&:hover": {
       color: "#007bff",
-    },
-  },
-  // Add this to the `useStyles` object in your Login.tsx file
-  socialIcon: {
-    fontSize: "2rem", // Adjust the size of the icons
-    cursor: "pointer",
-    transition: "color 0.3s ease, transform 0.3s ease", // Smooth hover effects
-    "&:hover": {
-      color: "#007bff", // Change color on hover
-      transform: "scale(1.2)", // Slightly enlarge the icon on hover
+      transform: "scale(1.2)",
     },
   },
 });
 
 const Login: React.FC = () => {
   const classes = useStyles();
+
+  // State for form fields and validation
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState<{ username?: string; password?: string }>(
+    {}
+  );
+
+  // Handle form submission
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Validate fields
+    const newErrors: { username?: string; password?: string } = {};
+    if (!username) {
+      newErrors.username = "Username is required";
+    }
+    if (!password) {
+      newErrors.password = "Password is required";
+    }
+
+    setErrors(newErrors);
+
+    // If no errors, proceed with login logic
+    if (Object.keys(newErrors).length === 0) {
+      console.log("Logging in with:", { username, password });
+      // Add your login logic here (e.g., API call)
+    }
+  };
 
   return (
     <Container maxWidth="sm" className={classes.container}>
@@ -97,12 +118,16 @@ const Login: React.FC = () => {
         </Typography>
 
         {/* Username/Password Login */}
-        <Box component="form" className={classes.form}>
+        <Box component="form" className={classes.form} onSubmit={handleSubmit}>
           <TextField
             fullWidth
             label="Username"
             variant="outlined"
             margin="normal"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            error={!!errors.username}
+            helperText={errors.username}
           />
           <TextField
             fullWidth
@@ -110,16 +135,26 @@ const Login: React.FC = () => {
             type="password"
             variant="outlined"
             margin="normal"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            error={!!errors.password}
+            helperText={errors.password}
           />
-          <Box className={classes.button} role="button">
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            type="submit"
+          >
             Login
-          </Box>
+          </Button>
         </Box>
 
         {/* Divider */}
         <Divider className={classes.divider}>Or login with</Divider>
 
-        {/* Social Media Login with Icons */}
+        {/* Social Media Login */}
         <Stack direction="row" spacing={2} justifyContent="center">
           <FacebookIcon className={classes.socialIcon} />
           <GoogleIcon className={classes.socialIcon} />
