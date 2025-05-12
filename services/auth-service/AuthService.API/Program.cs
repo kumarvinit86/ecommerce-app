@@ -27,6 +27,22 @@ builder.Services.AddDbContext<AuthDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddCors(options =>
+{
+    var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins")
+        .GetChildren()
+        .Select(x => x.Value)
+        .Where(x => x != null) // Filter out null values
+        .Cast<string>()        // Cast to non-nullable string
+        .ToArray();
+    options.AddPolicy("Cors",
+        builder =>
+        {
+            builder.WithOrigins(allowedOrigins)
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructure(); 
 builder.Services.AddApiServices();
@@ -35,6 +51,8 @@ builder.Services.AddApiServices();
 builder.Services.AddControllers();
 
 var app = builder.Build();
+app.UseCors("Cors");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

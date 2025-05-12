@@ -5,7 +5,7 @@ using CommunityToolkit.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/auth/[action]")]
+[Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
     private readonly IAuthQueryService authQueryService;
@@ -28,7 +28,7 @@ public class AuthController : ControllerBase
     /// a 401 Unauthorized response if authentication fails, or
     /// a 400 Bad Request response in case of a server error.
     /// </returns>
-    [HttpPost("authenticate")]
+    [HttpPost("login")]
     [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]

@@ -11,12 +11,13 @@ module.exports = (_, argv) => ({
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
   },
-
+  devtool: "source-map",
   devServer: {
     port: 3002,
+    hot: true,
     historyApiFallback: true,
-     headers: {
-        "Access-Control-Allow-Origin": "*", // Allow all origins
+    headers: {
+      "Access-Control-Allow-Origin": "*", // Allow all origins
     },
   },
 
@@ -50,7 +51,7 @@ module.exports = (_, argv) => ({
       remotes: {},
       exposes: {
         "./Login": "./src/components/auth/Login.tsx",
-       },
+      },
       shared: {
         ...deps,
         react: {
