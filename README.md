@@ -1,6 +1,6 @@
 # Ecommerce-app
 
-# 🛒 E-Commerce Platform (Microservices-based)
+# 🛒 E-Commerce Platform (Microservices, MicroFrontend-based)
 
 This project is a modular, microservices-based **E-Commerce Platform** designed with high scalability, security, and code quality in mind. It supports both **B2C** operations and **multi-seller marketplaces**, enabling customers to browse products, place orders, track shipments, and more. 
 
