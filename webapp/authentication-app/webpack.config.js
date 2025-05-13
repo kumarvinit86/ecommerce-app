@@ -3,6 +3,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 
 const deps = require("./package.json").dependencies;
+const path = require('path');
 module.exports = (_, argv) => ({
   output: {
     publicPath: "http://localhost:3002/",
@@ -10,6 +11,11 @@ module.exports = (_, argv) => ({
 
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
+     alias: {
+      '@ecommerce/shared-components/components': path.resolve(__dirname, '../shared-components/src/components'),
+      '@ecommerce/shared-components/api': path.resolve(__dirname, '../shared-components/src/api'),
+      '@ecommerce/shared-components/stores': path.resolve(__dirname, '../shared-components/src/stores'),
+    },
   },
   devtool: "source-map",
   devServer: {

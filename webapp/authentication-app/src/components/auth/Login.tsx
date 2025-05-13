@@ -12,9 +12,10 @@ import { makeStyles } from "@mui/styles";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import Headers from "@ecommerce/shared-components/Header";
-import { apiClient } from "@ecommerce/shared-components/api/apiClient";
-import {useAuthStore} from "@ecommerce/shared-components/stores/useAuthStore";
+import Headers from '@ecommerce/shared-components/components/Header';
+import {apiClient} from '@ecommerce/shared-components/api/apiClient';
+import {useAuthStore} from '@ecommerce/shared-components/stores/useAuthStore';
+
 // Define styles using Material-UI's makeStyles
 const useStyles = makeStyles({
   container: {

@@ -13,7 +13,12 @@
     "useDefineForClassFields": true,
     "allowImportingTsExtensions": true,
     "paths": {
-      "*": ["./@mf-types/*"]
+      "*": ["./@mf-types/*"],
+      "@ecommerce/shared-components/*": [
+        "../shared-components/src/components/*",
+        "../shared-components/src/api/*",
+        "../shared-components/src/stores/*"
+      ]
     },
     "sourceMap": true
   },
