@@ -35,7 +35,7 @@ Key features include:
 - **Webpack 5 + Module Federation**
 - **Zustand** for state management
 - **Axios** for API communication
-- **Tailwind CSS** or CSS Modules for styling
+- **MUI CSS** or CSS Modules for styling
 - **React Router** for navigation (shell)
 - **SignalR** (future) for real-time notifications
 - **Azure / Kubernetes** (deployment plan)
