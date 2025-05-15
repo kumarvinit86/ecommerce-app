@@ -1,5 +1,5 @@
 {
-  "name": "authentication_app",
+  "name": "ecommerce-main",
   "version": "0.0.1",
   "scripts": {
     "build": "webpack --mode production",
@@ -8,7 +8,13 @@
     "start": "webpack serve --open --mode development",
     "start:live": "webpack serve --open --mode development --live-reload --hot"
   },
-  "devDependencies": {
+  "dependencies": {
+    "@babel/runtime": "^7.27.1",
+    "@module-federation/enhanced": "^0.8.9",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-refresh": "^0.14.0",
+    "react-router-dom": "^7.6.0",
     "@babel/core": "^7.27.1",
     "@babel/plugin-transform-runtime": "^7.27.1",
     "@babel/preset-env": "^7.27.2",
@@ -32,14 +38,7 @@
     "typescript": "^5.8.3",
     "webpack": "^5.99.8",
     "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.1"
-  },
-  "dependencies": {
-    "@babel/runtime": "^7.27.1",
-    "@module-federation/enhanced": "^0.8.9",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-refresh": "^0.14.0",
-    "react-router-dom": "^7.6.0"
+    "webpack-dev-server": "^5.2.1",
+    "@ecommerce/shared-components": "*"
   }
 }

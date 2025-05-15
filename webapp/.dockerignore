@@ -1,3 +1,5 @@
+**/authentication-app/node_modules
+**/ecommerce-main/node_modules
 **/node_modules
 **/dist
 **/.git

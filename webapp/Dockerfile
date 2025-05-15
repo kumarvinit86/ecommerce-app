@@ -1,54 +1,42 @@
-# -------------------------------------------------
-# 🔧 Base build for shared-components
-# -------------------------------------------------
-FROM node:20-alpine AS shared-build
-WORKDIR /webapp/shared-components
-COPY ./shared-components/package*.json ./
-RUN npm install
-COPY ./shared-components .
-RUN npm run build
+# ---------------------------
+# 🔧 Stage 1: Builder
+# ---------------------------
+FROM node:20 AS builder
 
-# -------------------------------------------------
-# 🔧 Build for authentication-app
-# -------------------------------------------------
-FROM node:20-alpine AS auth-build
-WORKDIR /webapp/authentication-app
-COPY ./authentication-app/package*.json ./
-RUN npm install
+# Set working directory
+WORKDIR /app
 
-# Copy built shared-components and src
-COPY --from=shared-build /webapp/shared-components/dist ../shared-components/dist
-COPY --from=shared-build /webapp/shared-components/src ../shared-components/src
+# Copy root package files for npm workspaces
+COPY package*.json ./
 
-COPY ./authentication-app .
+# Copy workspace project folders
+COPY authentication-app ./authentication-app
+COPY shared-components ./shared-components
+COPY ecommerce-main ./ecommerce-main
 
-RUN npm run build
-
-# -------------------------------------------------
-# 🔧 Build for ecommerce-main (shell)
-# -------------------------------------------------
-FROM node:20-alpine AS shell-build
-WORKDIR /webapp/ecommerce-main
-COPY ./ecommerce-main/package*.json ./
+# Install all dependencies (uses npm workspaces)
 RUN npm install
 
-# Copy built shared-components and src
-COPY --from=shared-build /webapp/shared-components/dist ../shared-components/dist
-COPY --from=shared-build /webapp/shared-components/src ../shared-components/src
+# Build authentication-app
+RUN npm run --workspace=authentication-app build
 
-COPY ./ecommerce-main .
+# Build ecommerce-main
+RUN npm run --workspace=ecommerce-main build
 
-RUN npm run build
-
-# -------------------------------------------------
-# 🚀 Serve both apps using NGINX
-# -------------------------------------------------
+# ---------------------------
+# 🪶 Stage 2: Production (Nginx)
+# ---------------------------
 FROM nginx:alpine
-#COPY ./nginx.conf /etc/nginx/nginx.conf
 
-# Copy build outputs to nginx www
-COPY --from=auth-build /webapp/authentication-app/dist /usr/share/nginx/html/auth
-COPY --from=shell-build /webapp/ecommerce-main/dist /usr/share/nginx/html/shell
+# Optional: add your custom nginx config
+# COPY nginx.conf /etc/nginx/nginx.conf
 
+# Copy built outputs from builder stage
+COPY --from=builder /app/authentication-app/dist /usr/share/nginx/html/auth
+COPY --from=builder /app/ecommerce-main/dist /usr/share/nginx/html/main
+
+# Expose HTTP port
 EXPOSE 80
+
+# Start nginx server
 CMD ["nginx", "-g", "daemon off;"]

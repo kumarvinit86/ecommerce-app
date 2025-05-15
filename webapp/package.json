@@ -1,0 +1,9 @@
+{
+  "name": "ecommerce-web",
+  "private": true,
+  "workspaces": [
+    "authentication-app",
+    "ecommerce-main",
+    "shared-components"
+  ]
+}

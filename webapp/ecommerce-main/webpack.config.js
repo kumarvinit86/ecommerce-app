@@ -50,14 +50,12 @@ module.exports = (_, argv) => ({
       exposes: {},
       shared: {
         ...deps,
-        react: {
-          singleton: true,
-          requiredVersion: deps.react,
-        },
-        "react-dom": {
-          singleton: true,
-          requiredVersion: deps["react-dom"],
-        },
+        react: { singleton: true, requiredVersion: '^19.1.0' },
+        'react-dom': { singleton: true, requiredVersion: '^19.1.0' },
+        '@mui/material': { singleton: true, requiredVersion: '^7.1.0' },
+        '@emotion/react': { singleton: true, requiredVersion: '^11.14.0' },
+        '@emotion/styled': { singleton: true, requiredVersion: '^11.14.0' },
+        zustand: { singleton: true, requiredVersion: '^5.0.4' },
       },
     }),
     new HtmlWebPackPlugin({
