@@ -1,12 +1,18 @@
 version: "3.8"
 
 services:
-  ecommerce-webapp:
-    image: ecommerce/webapp-suite:latest
-    container_name: ecommerce-webapp-suite
+  authentication-app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: authentication-app/Dockerfile
     ports:
       - "84:84"
-    restart: unless-stopped
+    container_name: authentication-app
+
+  ecommerce-main:
+    build:
+      context: .
+      dockerfile: ecommerce-main/Dockerfile
+    ports:
+      - "85:85"
+    container_name: ecommerce-main
