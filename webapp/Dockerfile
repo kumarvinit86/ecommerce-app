@@ -1,5 +1,5 @@
 # ---------------------------
-# 🔧 Stage 1: Builder
+# Stage 1: Builder
 # ---------------------------
 FROM node:20 AS builder
 
@@ -24,19 +24,18 @@ RUN npm run --workspace=authentication-app build
 RUN npm run --workspace=ecommerce-main build
 
 # ---------------------------
-# 🪶 Stage 2: Production (Nginx)
+# Stage 2: Production (Nginx)
 # ---------------------------
 FROM nginx:alpine
 
 # Optional: add your custom nginx config
 # COPY nginx.conf /etc/nginx/nginx.conf
-
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copy built outputs from builder stage
 COPY --from=builder /app/authentication-app/dist /usr/share/nginx/html/auth
 COPY --from=builder /app/ecommerce-main/dist /usr/share/nginx/html/main
 
 # Expose HTTP port
-EXPOSE 80
-
+EXPOSE 84
 # Start nginx server
 CMD ["nginx", "-g", "daemon off;"]

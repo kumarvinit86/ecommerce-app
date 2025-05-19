@@ -6,7 +6,7 @@ const deps = require("./package.json").dependencies;
 const path = require('path');
 module.exports = (_, argv) => ({
   output: {
-    publicPath: "http://localhost:3002/",
+    publicPath: "http://localhost:84/auth/",
   },
 
   resolve: {
@@ -19,7 +19,7 @@ module.exports = (_, argv) => ({
   },
   devtool: "source-map",
   devServer: {
-    port: 3002,
+    port: 84,
     hot: true,
     historyApiFallback: true,
     headers: {

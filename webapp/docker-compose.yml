@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  ecommerce-webapp:
+    image: ecommerce/webapp-suite:latest
+    container_name: ecommerce-webapp-suite
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "84:84"
+    restart: unless-stopped

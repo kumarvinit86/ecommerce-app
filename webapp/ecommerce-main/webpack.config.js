@@ -3,9 +3,13 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 
 const deps = require("./package.json").dependencies;
+const path = require('path');
+
 module.exports = (_, argv) => ({
   output: {
-    publicPath: "http://localhost:3000/",
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].[contenthash].js',
+    publicPath: '/main/', // <-- or adjust based on how it's served
   },
 
   resolve: {
@@ -13,7 +17,7 @@ module.exports = (_, argv) => ({
   },
 
   devServer: {
-    port: 3000,
+    port: 84,
     historyApiFallback: true,
   },
 
@@ -45,7 +49,7 @@ module.exports = (_, argv) => ({
       name: "ecommerce_main",
       filename: "ecommerce-main.js",
       remotes: {
-        authentication_app: "authentication_app@http://localhost:3002/authentication-app.js",
+        authentication_app: "authentication_app@http://localhost:84/auth/authentication-app.js",
       },
       exposes: {},
       shared: {

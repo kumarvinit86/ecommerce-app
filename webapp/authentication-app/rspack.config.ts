@@ -22,7 +22,7 @@ export default defineConfig({
   },
 
   devServer: {
-    port: 3002,
+    port: 84,
     historyApiFallback: true,
     watchFiles: [path.resolve(__dirname, "src")],
   },
@@ -30,7 +30,7 @@ export default defineConfig({
     // You need to set a unique value that is not equal to other applications
     uniqueName: "authentication_app",
     // publicPath must be configured if using manifest
-    publicPath: "http://localhost:3002/",
+    publicPath: "http://localhost:84/auth/",
   },
 
   experiments: {
